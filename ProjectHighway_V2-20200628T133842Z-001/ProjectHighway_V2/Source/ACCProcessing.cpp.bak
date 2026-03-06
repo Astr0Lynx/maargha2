@@ -1,0 +1,129 @@
+#include "ACCProcessing.h"
+#include "global.h"
+#include <deque>
+
+//Global Variables
+static bool switchOFF;
+extern sensorData liveData;
+extern sensorData prevData;
+
+std::deque<loc>gpsTrack;
+std::deque<double> ACC_Values;
+std::deque<double> DIST_Values;
+std::deque<double> ACC_Values_s;
+//////////////////////////////////////////////////////////////////////
+// Construction/Destruction
+//////////////////////////////////////////////////////////////////////
+
+ACCProcessing::ACCProcessing()
+{
+}
+
+ACCProcessing::~ACCProcessing()
+{
+}
+
+void plotAcc(Mat accPlot)
+{
+	if(ACC_Values.empty())
+		return;
+	accPlot.setTo(Scalar(0));
+	for(int i=0;i<ACC_Values.size()-1;i++)
+	{
+		cv::line(accPlot,cv::Point2f(i,(ACC_Values.at(i)*10 + (accPlot.rows)/2)),cv::Point2f(i,ACC_Values.at(i+1)*10 + (accPlot.rows)/2),Scalar(255,255,255),1,8,0);
+	}
+	cv::imshow("Acc_Plot",accPlot);
+}
+
+double gpsDistance(loc presPOS, loc prevPOS) 
+{
+	if((presPOS.lat == prevPOS.lat) && (presPOS.lon == prevPOS.lon))
+		return 0;
+    double earthRadius = 6371; //kilometers
+	double dLat = DEG2RAD((prevPOS.lat-presPOS.lat));
+    double dLng = DEG2RAD((prevPOS.lon-presPOS.lon));
+    double a = sin(dLat/2) * sin(dLat/2) +
+               cos(DEG2RAD(presPOS.lat)) * cos(DEG2RAD(prevPOS.lat)) *
+               sin(dLng/2) * sin(dLng/2);
+    double c = 2 * atan2(sqrt(a), sqrt(1-a));
+    double dist = (earthRadius * c);
+    return dist*1000;
+}
+
+
+void ACCProcessing::processACC(Mat *accPlot)
+{
+
+	static double sumSqr=0;
+	double intraPtDist=0;
+	static loc presPOS,prevPOS;
+	static double distTvld=0;
+	double RMSD;
+	//-----------------------------------------------------------------
+	plotAcc(*accPlot);
+
+	//distance calculation-----------------------------------------
+	prevPOS.lat = presPOS.lat;prevPOS.lon = presPOS.lon;
+	presPOS.lat = liveData.lat;presPOS.lon = liveData.lon;
+	intraPtDist = gpsDistance(presPOS, prevPOS);
+	if(intraPtDist>10000)
+		return;
+	distTvld = distTvld + intraPtDist;
+			
+	//Finding RMSD-----------------------------------------------------
+	ACC_Values.push_back(liveData.accG);//1
+	ACC_Values_s.push_back(liveData.accG * liveData.accG);//2
+	sumSqr = sumSqr + ACC_Values_s.back();
+	//one of the feature vector element
+	RMSD = sqrt(sumSqr / ACC_Values_s.size());
+
+	DIST_Values.push_back(intraPtDist);//3
+	gpsTrack.push_back(presPOS);//4
+	//if (distTvld > X) reduce the buffer content------------------
+	if (distTvld > DIST_THRESH_M)
+	{
+		/*--------------------------------------------------------
+		//gps debug
+		double gpsDist=0;
+		for(unsigned int i=0;i<gpsTrack.size()-1;i++)
+		{
+			if((gpsTrack.at(i).lat!=gpsTrack.at(i+1).lat)&&(gpsTrack.at(i).lon!=gpsTrack.at(i+1).lon)
+				&&(gpsTrack.at(i).lat!=0)&&(gpsTrack.at(i).lon!=0)
+				&&(gpsTrack.at(i+1).lat!=0)&&(gpsTrack.at(i+1).lon!=0))
+			{
+				gpsDist= gpsDist+gpsDistance(gpsTrack.at(i), gpsTrack.at(i+1));
+			}
+		}
+		cout <<"gps dist"<<gpsDist<<endl;
+		//--------------------------------------------------------*/
+		while (distTvld > DIST_THRESH_M)
+		{
+			distTvld = distTvld - DIST_Values.front();
+			sumSqr   = sumSqr - ACC_Values_s.front();		
+			gpsTrack.pop_front();
+			ACC_Values.pop_front();
+			ACC_Values_s.pop_front();
+			DIST_Values.pop_front();
+		}
+	}
+	//in case the buffer overflows
+	if(gpsTrack.size()>BUF_SIZE)
+	{
+		distTvld = distTvld - DIST_Values.front();
+		sumSqr   = sumSqr - ACC_Values_s.front();
+		gpsTrack.pop_front();
+		ACC_Values.pop_front();
+		ACC_Values_s.pop_front();
+		DIST_Values.pop_front();
+	}
+}
+
+void ACCProcessing::train()
+{
+	
+}
+
+void ACCProcessing::classify()
+{
+	
+}

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Maargha</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_search">Search</string>
+    <string name="title_activity_inner">Inner</string>
+    <string name="title_activity_data">Data</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="title_activity_data_view">DataView</string>
+    <string name="title_activity_data_delete">DataDelete</string>
+
+</resources>
