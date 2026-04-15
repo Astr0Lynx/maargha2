@@ -1,4 +1,4 @@
-#include <opencv2/highgui/highgui.hpp>
+#include <opencv2/highgui.hpp>
 #define DATA_BUF_SIZE 200
 #define ACC_THRESH 0.20
 #define ACC_PLOT_HT 200

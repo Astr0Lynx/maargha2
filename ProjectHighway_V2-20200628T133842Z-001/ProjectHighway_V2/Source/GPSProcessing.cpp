@@ -1,7 +1,7 @@
 // GPSInfo.cpp: implementation of the GPSInfo class.
 //
 //////////////////////////////////////////////////////////////////////
-#include "GPSProcessing.h"
+#include "../Header/GPSProcessing.h"
 #include <deque>
 
 //Global Variables
@@ -78,9 +78,8 @@ void GPSProcessing::mapRead(vector <loc> *wayPts,vector <vector<loc>> *wayPtsGrp
 	loc tmpLoc;
 	FILE *fp;
 	fp = fopen("nodeLatLon2.txt","r");
-	while((feof(fp)==0))
+	while(fscanf(fp,"%lf %lf\n",&tmpLoc.lat,&tmpLoc.lon) == 2)
 	{
-		fscanf(fp,"%lf %lf\n",&tmpLoc.lat,&tmpLoc.lon);
 		if((tmpLoc.lat < 999.99) && (tmpLoc.lon < 999.99))
 			wayPts->push_back(tmpLoc);
 		else
@@ -334,7 +333,7 @@ void GPSProcessing:: findViewCircle(loc mapCenter, loc myLoc,vector <loc> *wayPt
 			if(  ((tmpLoc1.lat > (mapCenter.lat + viewDist)) && ((tmpLoc2.lat > (mapCenter.lat + viewDist))))  //above
 			   ||((tmpLoc1.lat < (mapCenter.lat - viewDist)) && ((tmpLoc2.lat < (mapCenter.lat - viewDist))))  //below
 			   ||((tmpLoc1.lon > (mapCenter.lon + viewDist)) && ((tmpLoc2.lon > (mapCenter.lon + viewDist))))  //left
-			   ||((tmpLoc1.lat < (mapCenter.lon - viewDist)) && ((tmpLoc2.lon < (mapCenter.lon - viewDist))))) //right
+			   ||((tmpLoc1.lon < (mapCenter.lon - viewDist)) && ((tmpLoc2.lon < (mapCenter.lon - viewDist))))) //right
 				continue;//skip those points
 			else
 			{
@@ -432,9 +431,8 @@ void GPSProcessing::mapMatching(loc rawGPSPt,vector <loc> *wayPt,vector <vector<
 		waitKey(1);	
 
 	//Convert the point back to GPS coordinate
-	Point2d tmploc;
-    corGPSPt.lon = (tmploc.x/51500) + rawGPSPt.lon;
-	corGPSPt.lat = rawGPSPt.lat - (tmploc.y/51500);//assume earth is flat in the small FOV. the difference is multiplied with scale factor..
+    corGPSPt.lon = (selP.x/51500) + rawGPSPt.lon;
+	corGPSPt.lat = rawGPSPt.lat - (selP.y/51500);//assume earth is flat in the small FOV. the difference is multiplied with scale factor..
 	//the above formula will work only in the northern hemisphere and east of meridian
 
 

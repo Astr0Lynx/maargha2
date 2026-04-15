@@ -45,7 +45,7 @@ void CAMProcessing::camPothole(void)
     vector<vector<Point> > contours;
     vector<Vec4i> hierarchy;
 	Mat subImg(camPIC_copy, Rect(BOX_Ox,BOX_Oy,BOX_W,BOX_H));
-	cv::cvtColor(subImg,edge,CV_BGR2GRAY);
+	cv::cvtColor(subImg,edge,COLOR_BGR2GRAY);
 	imshow("Edge map", edge);
 	waitKey(1);
     // Run the edge detector on grayscale
@@ -53,7 +53,7 @@ void CAMProcessing::camPothole(void)
     cedge = Scalar::all(0); 
     edge.copyTo(cedge);
 
-    findContours( cedge, contours, hierarchy, CV_RETR_CCOMP, CV_CHAIN_APPROX_SIMPLE );
+    findContours( cedge, contours, hierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE );
 	
 	Mat dst = Mat::zeros(subImg.size(), CV_8UC3);
 
@@ -65,7 +65,7 @@ void CAMProcessing::camPothole(void)
         for( ; idx >= 0; idx = hierarchy[idx][0] )
         {
             Scalar color( (rand()&255), (rand()&255), (rand()&255) );
-            drawContours( dst, contours, idx, color, CV_FILLED, 8, hierarchy );
+            drawContours( dst, contours, idx, color, FILLED, 8, hierarchy );
 
 			///cout<<cv::contourArea(contours.at(idx))<<endl;
 
@@ -240,7 +240,7 @@ unsigned int compareHistogram(Mat hist, cv::FileStorage fs,vector<std::string> *
 		{
 			sprintf_s(histName,"histogram_class_%s_%d\0",className->at(i).c_str(),j);
 			fs [histName] >> trainHist;
-			double cmpValue = cv::compareHist(trainHist,hist,CV_COMP_BHATTACHARYYA);
+			double cmpValue = cv::compareHist(trainHist,hist,HISTCMP_BHATTACHARYYA);
 			value_and_class.push_back(cmpValue);
 			value_and_class.push_back(i);//class
 			all_value_and_class.push_back(value_and_class);

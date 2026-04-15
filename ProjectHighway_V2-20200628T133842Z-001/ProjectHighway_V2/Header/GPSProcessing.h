@@ -1,10 +1,10 @@
 // GPSInfo.h: interface for the GPSInfo class.
 //
 //////////////////////////////////////////////////////////////////////
-#include <opencv2/core/core.hpp>
-#include <opencv2/imgproc/imgproc.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/calib3d/calib3d.hpp>
+#include <opencv2/core.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/highgui.hpp>
+#include <opencv2/calib3d.hpp>
 #include <process.h>
 #include <iostream>
 #include <fstream>
@@ -20,11 +20,11 @@ using namespace cv;
 class GPSProcessing
 {
 private:
-	Point2d GPSProcessing::tngtPlaneProj(loc mapCenter,loc ltlnPt);
-	void GPSProcessing::latlon2Cart_mlti_pt(vector <loc> *wayPts,vector <vector<loc>> *wayGrp,vector <Point2f> *cartWayPts,vector <vector<Point2f>> *cartWayPtsGrp,loc mapCenter);
-	Point2d GPSProcessing::latlon2Cart_1_pt(loc ltlnPt,loc mapCenter);
-	void GPSProcessing::mapRead(vector <loc> *wayPts,vector <vector<loc>> *wayPtsGrp);
-	void GPSProcessing::gpsMapRecenter(vector <vector<Point2f>> *tngtPrjwayGrp,Mat image);
+	Point2d tngtPlaneProj(loc mapCenter,loc ltlnPt);
+	void latlon2Cart_mlti_pt(vector <loc> *wayPts,vector <vector<loc>> *wayGrp,vector <Point2f> *cartWayPts,vector <vector<Point2f>> *cartWayPtsGrp,loc mapCenter);
+	Point2d latlon2Cart_1_pt(loc ltlnPt,loc mapCenter);
+	void mapRead(vector <loc> *wayPts,vector <vector<loc>> *wayPtsGrp);
+	void gpsMapRecenter(vector <vector<Point2f>> *tngtPrjwayGrp,Mat image);
 public:
 	GPSProcessing();
 	virtual ~GPSProcessing();

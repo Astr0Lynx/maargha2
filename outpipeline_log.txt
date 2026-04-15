@@ -1,0 +1,39 @@
+============================================================
+MAARGHA CORS Pipeline v2 - Lane-Level Accuracy
+============================================================
+
+[1/6] Parsing NMEA file ...
+  Parsed 829 NMEA epochs
+  Epoch 1775305412: 93 sats, good=33, hdop=0.5, pdop=0.3, pos=yes, pass=True
+  Epoch 1775305413: 93 sats, good=40, hdop=0.5, pdop=0.3, pos=yes, pass=True
+  Epoch 1775305414: 93 sats, good=43, hdop=0.5, pdop=0.3, pos=yes, pass=True
+
+[2/6] Building GGA trajectories ...
+  Raw GGA:       829 points
+  Filtered GGA:  826 points (99.6% retained)
+  Epochs passing quality gate: 826/829 (99.6%)
+
+[3/6] Writing filtered RINEX ...
+  RINEX epochs: kept=826/829 (dropped=3)
+
+[4/6] CORS on raw rover -> using existing solution (already computed)
+
+[5/6] Running RTKLIB CORS on filtered rover ...
+  Exit code: 0
+
+[6/6] Post-processing CORS results ...
+  CORS raw points:      827
+  CORS filtered points: 825
+  Post-processing CORS-raw:
+Traceback (most recent call last):
+  File "C:\Users\Guntesh\Desktop\foo\gsd\maargha_cors_pipeline.py", line 979, in <module>
+    main()
+  File "C:\Users\Guntesh\Desktop\foo\gsd\maargha_cors_pipeline.py", line 888, in main
+    dlat_r, dlon_r = estimate_bias(cors_raw, bias_ref)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Guntesh\Desktop\foo\gsd\maargha_cors_pipeline.py", line 534, in estimate_bias
+    print(f"  Bias correction: \u0394lat={bias_lat:.7f}° ({bias_lat*111111:.2f}m), "
+  File "C:\Users\Guntesh\AppData\Local\Programs\Python\Python311\Lib\encodings\cp1252.py", line 19, in encode
+    return codecs.charmap_encode(input,self.errors,encoding_table)[0]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'charmap' codec can't encode character '\u0394' in position 19: character maps to <undefined>

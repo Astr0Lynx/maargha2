@@ -62,3 +62,10 @@ jarlist.cache
 # -------------------------------------------------------
 Thumbs.db
 Desktop.ini
+
+logger
+cors
+.venv/
+__pycache__/
+out/
+nul

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <fstream>
-#include <math.h> 
+#include <cmath>
 #include "Serial.h"
 #include <process.h>
 #include <opencv2/core/core.hpp>
@@ -65,7 +65,7 @@ void get_sensor_data(string* line,ifstream* dataFile,Serial *comObj)
 	if(getline(*dataFile,*line))
 	{
 		const char* c_line =line->c_str();
-		sscanf_s(c_line,"%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",
+		sscanf_s(c_line,"%lf %lf %lf %lf %lf %lf %lf %lf %lf %lf %lf",
 						&liveData.timestamp,&liveData.accX,&liveData.accY,&liveData.accZ,
 						&liveData.lat,&liveData.lon,&liveData.speed,
 						&liveData.Yaw,&liveData.Roll,&liveData.Pitch,&liveData.fileName);
@@ -89,7 +89,7 @@ void get_sensor_data(string* line,ifstream* dataFile,Serial *comObj)
 		Actual_prevDataAccX = liveData.accX;
 		liveData.accX = filteredAccX;
 
-		sprintf(serialData,"%.2f,%.2f,%.2f\r\n",liveData.Pitch-40,liveData.Roll+20,0.0);
+		sprintf_s(serialData,sizeof(serialData),"%.2f,%.2f,%.2f\r\n",liveData.Pitch-40,liveData.Roll+20,0.0);
 		comObj->writeData(serialData);
 
 		//-Not used any more----------------------------------------------------------------
@@ -176,11 +176,11 @@ void dis_sensor_data(GPSProcessing *gpsDataPrs,ACCProcessing *accDataPrs,CAMProc
 void chooseBox( int event, int x, int y, int flags, void* param )
 {	
 	switch( event ){
-		case CV_EVENT_MOUSEMOVE: 
+		case EVENT_MOUSEMOVE: 
 			break;
-		case CV_EVENT_LBUTTONDOWN:
+		case EVENT_LBUTTONDOWN:
 			break;
-		case CV_EVENT_LBUTTONUP:
+		case EVENT_LBUTTONUP:
 			//start point
 			BOX_Ox = x;
 			BOX_Oy = y;
@@ -190,15 +190,15 @@ void chooseBox( int event, int x, int y, int flags, void* param )
 			namedWindow("camPIC");
 			imshow("camPIC",camPIC);
 			break;
-		case CV_EVENT_RBUTTONDOWN:
+		case EVENT_RBUTTONDOWN:
 			break;
-		case CV_EVENT_RBUTTONUP:
+		case EVENT_RBUTTONUP:
 			//update the box
 			//boxPresent = true;
 			break;
-		case CV_EVENT_MBUTTONDOWN:
+		case EVENT_MBUTTONDOWN:
 			break;
-		case CV_EVENT_MBUTTONUP:
+		case EVENT_MBUTTONUP:
 			break;
 		default:
 			break;
@@ -209,26 +209,26 @@ void chooseBox( int event, int x, int y, int flags, void* param )
 void tarmudcon( int event, int x, int y, int flags, void* param )
 {	
 	switch( event ){
-		case CV_EVENT_MOUSEMOVE: 
+		case EVENT_MOUSEMOVE: 
 			break;
-		case CV_EVENT_LBUTTONDOWN:
+		case EVENT_LBUTTONDOWN:
 			//start recording
 			TRAIN = true;
 			roadTexture = "tar";// Tar Road
 			break;
-		case CV_EVENT_LBUTTONUP:
+		case EVENT_LBUTTONUP:
 			CLASSIFY = true;
 			break;
-		case CV_EVENT_RBUTTONDOWN:
+		case EVENT_RBUTTONDOWN:
 			roadTexture = "mudcon"; // mud or concrete Road
 			TRAIN = true;
 			break;
-		case CV_EVENT_RBUTTONUP:
+		case EVENT_RBUTTONUP:
 			CLASSIFY = false;
 			break;
-		case CV_EVENT_MBUTTONDOWN:
+		case EVENT_MBUTTONDOWN:
 			break;
-		case CV_EVENT_MBUTTONUP:
+		case EVENT_MBUTTONUP:
 			break;
 		default:
 			break;
@@ -237,26 +237,26 @@ void tarmudcon( int event, int x, int y, int flags, void* param )
 void mudcon( int event, int x, int y, int flags, void* param )
 {	
 	switch( event ){
-		case CV_EVENT_MOUSEMOVE: 
+		case EVENT_MOUSEMOVE: 
 			break;
-		case CV_EVENT_LBUTTONDOWN:
+		case EVENT_LBUTTONDOWN:
 			//start recording
 			TRAIN = true;
 			roadTexture = "mud";// mud Road
 			break;
-		case CV_EVENT_LBUTTONUP:
+		case EVENT_LBUTTONUP:
 			CLASSIFY = true;
 			break;
-		case CV_EVENT_RBUTTONDOWN:
+		case EVENT_RBUTTONDOWN:
 			roadTexture = "con"; // concrete Road
 			TRAIN = true;
 			break;
-		case CV_EVENT_RBUTTONUP:
+		case EVENT_RBUTTONUP:
 			CLASSIFY = false;
 			break;
-		case CV_EVENT_MBUTTONDOWN:
+		case EVENT_MBUTTONDOWN:
 			break;
-		case CV_EVENT_MBUTTONUP:
+		case EVENT_MBUTTONUP:
 			break;
 		default:
 			break;
@@ -266,31 +266,31 @@ void mudcon( int event, int x, int y, int flags, void* param )
 void onMouse2( int event, int x, int y, int flags, void* param )
 {	
 	switch( event ){
-		case CV_EVENT_MOUSEMOVE: 
+		case EVENT_MOUSEMOVE: 
 			break;
-		case CV_EVENT_LBUTTONDOWN:
+		case EVENT_LBUTTONDOWN:
 			//start recording
 			TRAIN = true;
 			roadCondition=0;
 			break;
-		case CV_EVENT_LBUTTONUP:
+		case EVENT_LBUTTONUP:
 			//stop recording
 			//TRAIN = false;
 			CLASSIFY = true;
 			break;
-		case CV_EVENT_RBUTTONDOWN:
+		case EVENT_RBUTTONDOWN:
 			TRAIN = true;
 			roadCondition=1;
 			break;
-		case CV_EVENT_RBUTTONUP:
+		case EVENT_RBUTTONUP:
 			//TRAIN = false;
 			CLASSIFY = false;
 			break;
-		case CV_EVENT_MBUTTONDOWN:
+		case EVENT_MBUTTONDOWN:
 			TRAIN = true;
 			roadCondition=2;
 			break;
-		case CV_EVENT_MBUTTONUP:
+		case EVENT_MBUTTONUP:
 			//TRAIN = false;
 			break;
 		default:
@@ -301,14 +301,14 @@ void onMouse2( int event, int x, int y, int flags, void* param )
 void onMouse3( int event, int x, int y, int flags, void* param )
 {	
 	switch( event ){
-		case CV_EVENT_MOUSEMOVE: 
+		case EVENT_MOUSEMOVE: 
 			break;
-		case CV_EVENT_LBUTTONDOWN:
+		case EVENT_LBUTTONDOWN:
 			//start recording
 			TRAIN = true;
 			roadCondition=3;
 			break;
-		case CV_EVENT_LBUTTONUP:
+		case EVENT_LBUTTONUP:
 			//stop recording
 			//TRAIN = false;
 			CLASSIFY = true;
@@ -368,11 +368,15 @@ int main()
 	cv::namedWindow("camPIC",1);
 
 	//main loop for training and classification---------------------------
-	while((key = cv::waitKey(0)) != 0x1b)
+	//	while((key = cv::waitKey(0)) != 0x1b) - earlier logic
+	while(true)
 	{	
 		cout<<"Project Highway"<<endl;
 		cout<<"Options"<<endl<<"1. Training"<<endl<<"2. Classification"<<endl<<"3.Break Out"<<endl;
+		\
 		cin>>option;
+		if(option==3)
+			break;
 
 		//Common steps for both training and classification
 		cv::setMouseCallback("camPIC", chooseBox, (void*)&param);
