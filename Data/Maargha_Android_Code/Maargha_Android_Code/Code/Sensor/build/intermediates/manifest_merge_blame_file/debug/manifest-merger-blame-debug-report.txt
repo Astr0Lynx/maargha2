@@ -1,0 +1,123 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.sensor"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="24"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-feature
+11-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:8:5-10:36
+12        android:name="android.hardware.camera.front"
+12-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:9:9-53
+13        android:required="false" />
+13-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:10:9-33
+14
+15    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+15-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:12:5-80
+15-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:12:22-77
+16    <uses-permission android:name="android.permission.INTERNET" />
+16-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:13:5-67
+16-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:13:22-64
+17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+17-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:14:5-79
+17-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:14:22-76
+18    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+18-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:15:5-81
+18-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:15:22-78
+19    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+19-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:16:5-81
+19-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:16:22-78
+20    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+20-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:17:5-79
+20-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:17:22-76
+21
+22    <uses-feature android:name="android.hardware.camera" />
+22-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:19:5-60
+22-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:19:19-57
+23
+24    <uses-permission android:name="android.permission.CAMERA" />
+24-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:21:5-65
+24-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:21:22-62
+25
+26    <application
+26-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:23:5-62:19
+27        android:allowBackup="true"
+27-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:24:9-35
+28        android:appComponentFactory="android.support.v4.app.CoreComponentFactory"
+28-->[com.android.support:support-compat:28.0.0] C:\Users\Guntesh\.gradle\caches\transforms-3\7e8ec3b89fca46762f83faa3b1e814e5\transformed\support-compat-28.0.0\AndroidManifest.xml:22:18-91
+29        android:debuggable="true"
+30        android:extractNativeLibs="false"
+31        android:icon="@drawable/ic_launcher"
+31-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:25:9-45
+32        android:label="@string/app_name"
+32-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:26:9-41
+33        android:testOnly="true"
+34        android:theme="@style/AppTheme" >
+34-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:27:9-40
+35        <activity
+35-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:28:9-37:20
+36            android:name="com.example.sensor.MainActivity"
+36-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:29:13-41
+37            android:exported="true"
+37-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:30:13-36
+38            android:label="@string/app_name" >
+38-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:31:13-45
+39            <intent-filter>
+39-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:32:13-36:29
+40                <action android:name="android.intent.action.MAIN" />
+40-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:33:17-69
+40-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:33:25-66
+41
+42                <category android:name="android.intent.category.LAUNCHER" />
+42-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:35:17-77
+42-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:35:27-74
+43            </intent-filter>
+44        </activity>
+45        <activity
+45-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:38:9-41:20
+46            android:name="com.example.sensor.Search"
+46-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:39:13-35
+47            android:label="@string/title_activity_search" >
+47-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:40:13-58
+48        </activity>
+49        <activity
+49-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:42:9-45:20
+50            android:name="com.example.sensor.Inner"
+50-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:43:13-34
+51            android:label="@string/title_activity_inner" >
+51-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:44:13-57
+52        </activity>
+53        <activity
+53-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:46:9-49:20
+54            android:name="com.example.sensor.Data"
+54-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:47:13-33
+55            android:label="@string/title_activity_data" >
+55-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:48:13-56
+56        </activity>
+57        <activity
+57-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:50:9-53:20
+58            android:name="com.example.sensor.Settings"
+58-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:51:13-37
+59            android:label="@string/title_activity_settings" >
+59-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:52:13-60
+60        </activity>
+61        <activity
+61-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:54:9-57:20
+62            android:name="com.example.sensor.DataView"
+62-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:55:13-37
+63            android:label="@string/title_activity_data_view" >
+63-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:56:13-61
+64        </activity>
+65        <activity
+65-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:58:9-61:20
+66            android:name="com.example.sensor.DataDelete"
+66-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:59:13-39
+67            android:label="@string/title_activity_data_delete" >
+67-->C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\AndroidManifest.xml:60:13-63
+68        </activity>
+69    </application>
+70
+71</manifest>

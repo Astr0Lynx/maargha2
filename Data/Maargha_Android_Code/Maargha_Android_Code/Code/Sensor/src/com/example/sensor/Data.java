@@ -4,7 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.media.MediaScannerConnection;
@@ -22,7 +22,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class Data extends ActionBarActivity implements android.view.View.OnClickListener,OnLongClickListener{
+public class Data extends Activity implements android.view.View.OnClickListener,OnLongClickListener{
 
 	TextView t;
 	DatabaseAdapter database;

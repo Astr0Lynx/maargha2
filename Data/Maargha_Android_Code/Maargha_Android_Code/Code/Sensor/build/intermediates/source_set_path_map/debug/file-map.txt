@@ -1,0 +1,10 @@
+com.example.sensor.Sensor-appcompat-v7-28.0.0-0 C:\Users\Guntesh\.gradle\caches\transforms-3\5d6ea8431895de9180969f73914acc14\transformed\appcompat-v7-28.0.0\res
+com.example.sensor.Sensor-support-compat-28.0.0-1 C:\Users\Guntesh\.gradle\caches\transforms-3\7e8ec3b89fca46762f83faa3b1e814e5\transformed\support-compat-28.0.0\res
+com.example.sensor.Sensor-coordinatorlayout-28.0.0-2 C:\Users\Guntesh\.gradle\caches\transforms-3\de5ac67575a98505cb9b6e2c27325585\transformed\coordinatorlayout-28.0.0\res
+com.example.sensor.Sensor-pngs-3 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\build\generated\res\pngs\debug
+com.example.sensor.Sensor-resValues-4 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\build\generated\res\resValues\debug
+com.example.sensor.Sensor-packageDebugResources-5 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+com.example.sensor.Sensor-packageDebugResources-6 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+com.example.sensor.Sensor-merged_res-7 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\build\intermediates\merged_res\debug
+com.example.sensor.Sensor-Sensor-8 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\res
+com.example.sensor.Sensor-debug-9 C:\Users\Guntesh\Desktop\foo\gsd\Data\Maargha_Android_Code\Maargha_Android_Code\Code\Sensor\src\debug\res

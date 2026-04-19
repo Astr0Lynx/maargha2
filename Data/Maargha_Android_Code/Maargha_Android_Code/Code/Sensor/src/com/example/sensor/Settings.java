@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.text.Editable;
 import android.content.Context;
 import android.content.Intent;
@@ -67,7 +67,7 @@ import android.widget.Toast;
 
 
 
-public class Settings extends ActionBarActivity {
+public class Settings extends Activity {
 
 	EditText et1,et2;
 	String cam="0.5",acc="1";
@@ -104,7 +104,7 @@ public class Settings extends ActionBarActivity {
 					float v1 = Float.parseFloat(acc);
 					float v2 = Float.parseFloat(cam);
 					String str1="",str2="";
-					Toast.makeText(this,v1+"s"+v2,Toast.LENGTH_LONG).show();
+					// Silenced 2014 legacy debug toast
 					if(cb1.isChecked())
 						str1 = 1000/v1+"";
 					else

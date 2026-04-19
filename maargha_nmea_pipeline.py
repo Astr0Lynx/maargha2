@@ -125,6 +125,26 @@ def process_nmea_file(filepath, output_csv, output_json):
         with open(output_json, 'w') as jsonfile:
             json.dump(filtered_json, jsonfile, indent=2)
         print(f"React UI Data saved to: {output_json}")
+        
+        # Phase 3: Legacy C++ Exporter Integration
+        # Generate ANDGPSLA{timestamp}.csv and ANDGPSLO{timestamp}.csv format
+        try:
+            # Replicate the 2014 SenseView filename format using the first epoch
+            first_dt = datetime.fromtimestamp(filtered_points[0]['timestamp'] / 1000.0)
+            legacy_dt_str = first_dt.strftime("%Y-%m-%d-%H-%M-%S")
+            
+            lat_file = os.path.join(os.path.dirname(output_csv), f"ANDGPSLA{legacy_dt_str}.csv")
+            lon_file = os.path.join(os.path.dirname(output_csv), f"ANDGPSLO{legacy_dt_str}.csv")
+            
+            with open(lat_file, 'w') as flat, open(lon_file, 'w') as flon:
+                for idx, pt in enumerate(filtered_points):
+                    # Format strictly matching C++ sscanf_s: tmp1(double), m_time(double), lat/lon(double)
+                    # Example: 1.0,1618290333000,17.44555
+                    flat.write(f"1.0,{pt['timestamp']},{pt['lat']}\n")
+                    flon.write(f"1.0,{pt['timestamp']},{pt['lon']}\n")
+            print(f"Legacy C++ Compatibility Data Generated: [ {os.path.basename(lat_file)}, {os.path.basename(lon_file)} ]")
+        except Exception as e:
+            print(f"Error generating legacy output: {e}")
     else:
         print("Warning: No points passed the quality gate!")
 

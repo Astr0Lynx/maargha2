@@ -2,14 +2,14 @@ package com.example.sensor;
 
 
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TableLayout;
 import android.widget.TextView;
 
-public class DataView extends ActionBarActivity {
+public class DataView extends Activity {
 	
 	String file;
 	DatabaseAdapter database;

@@ -2,13 +2,13 @@ package com.example.sensor;
 
 import com.example.sensor.DatabaseAdapter.DatabaseHelper;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
-public class DataDelete extends ActionBarActivity {
+public class DataDelete extends Activity {
 
 	DatabaseAdapter database;
 	TextView t;

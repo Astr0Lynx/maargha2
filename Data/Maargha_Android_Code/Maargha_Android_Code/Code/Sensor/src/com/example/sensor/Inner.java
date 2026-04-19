@@ -25,7 +25,7 @@ import org.json.JSONObject;
 
 
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -43,6 +43,7 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.location.OnNmeaMessageListener;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -65,7 +66,7 @@ import android.widget.Toast;
 
 
 
-public class Inner extends ActionBarActivity implements LocationListener {
+public class Inner extends Activity implements LocationListener {
 
 	SensorManager sm = null;  
     TextView textView1 = null;  
@@ -92,11 +93,47 @@ public class Inner extends ActionBarActivity implements LocationListener {
     int camfreq=2000;
     EditText et1;
     String file;
+    // Phase 2 Implementation: Native NMEA Logging
+    FileOutputStream nmeaFileStream;
+    OnNmeaMessageListener nmeaListener;
+    
+    // Live UI Telemetry State
+    String liveAccel = "ACCEL: Waiting...";
+    String liveGps = "GPS: Waiting...";
+    String liveNmea = "NMEA: Waiting...";
+
+    private void updateTelemetryUI() {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                if (t1 != null) {
+                    t1.setText(liveAccel + "\n\n" + liveGps + "\n" + liveNmea);
+                }
+            }
+        });
+    }
  
 	@Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // Dynamically morph the START button into a STOP button!
+        Button startBtn = (Button) findViewById(R.id.button1);
+        if (startBtn != null) {
+            startBtn.setText("STOP LOGGING");
+            startBtn.setBackgroundTintList(android.content.res.ColorStateList.valueOf(android.graphics.Color.parseColor("#EF4444"))); 
+            startBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(Inner.this, MainActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                    startActivity(intent);
+                    finish(); // Safely triggers onDestroy() to drop NMEA hooks
+                }
+            });
+        }
+
         t1 = (TextView)findViewById(R.id.textView1);
         et1 = (EditText)findViewById(R.id.editText1);
         imageView = (ImageView)findViewById(R.id.imageView1);
@@ -113,13 +150,15 @@ public class Inner extends ActionBarActivity implements LocationListener {
 		ACCEL_SENSOR_DELAY = (int)Float.parseFloat(acc);
 		if(cam!=null)
 		camfreq = (int)Float.parseFloat(cam);
-		Toast.makeText(this, ACCEL_SENSOR_DELAY+"w"+camfreq, Toast.LENGTH_SHORT).show();
+		// Silenced 2014 debug toast
 		
     //    t2 = (TextView)findViewById(R.id.textView2);
         date  = new SimpleDateFormat("hh-mm-ss");
        
         database = new DatabaseAdapter(this);
         
+        // Phase 2 Fix: Auto-trigger the tracking hardware instantly without requiring a second click!
+        Start(null);
 }
 	
 	public void ViewData(View v)
@@ -136,10 +175,43 @@ public class Inner extends ActionBarActivity implements LocationListener {
 	   public void Start(View v)
 	   {
 		  file = et1.getText().toString();
+		  
+		  // Phase 2 Implementation: Create a background sync stream to record NMEA
+		  try {
+		      File dir = getExternalFilesDir(Environment.DIRECTORY_DOWNLOADS);
+		      if (!dir.exists()) dir.mkdirs();
+		      String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+		      File nmeaFile = new File(dir, "Maargha_Raw_NMEA_" + timeStamp + ".txt");
+		      nmeaFileStream = new FileOutputStream(nmeaFile, true);
+		  } catch (Exception e) {
+		      e.printStackTrace();
+		  }
+
 		  preview = new Preview(this);
 	        ((FrameLayout) findViewById(R.id.preview)).addView(preview);
 		  locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);    
 	        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0,this );
+            
+	        // Phase 2 Implementation: Async Hardware NMEA String Interceptor
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                nmeaListener = new OnNmeaMessageListener() {
+                    @Override
+                    public void onNmeaMessage(String message, long timestamp) {
+                        try {
+                            if (nmeaFileStream != null) {
+                                nmeaFileStream.write(message.getBytes());
+                            }
+                            String cleanMsg = message.trim();
+                            if(cleanMsg.length() > 28) cleanMsg = cleanMsg.substring(0, 28) + "...";
+                            liveNmea = "RAW NMEA: " + cleanMsg;
+                            updateTelemetryUI();
+                        } catch (IOException e) { e.printStackTrace(); }
+                    }
+                };
+                try {
+                	locationManager.addNmeaListener(nmeaListener, null);
+                } catch(SecurityException e) { e.printStackTrace(); }
+            }
 	     //  database.deleteContact("abhi");
 	         JsonReadTask1 task1 = new JsonReadTask1();
 	     	  task1.execute();
@@ -175,6 +247,8 @@ public class Inner extends ActionBarActivity implements LocationListener {
 	    	latitude = location.getLatitude()+"";
 	    	longitude = location.getLongitude()+"";
 	    	speed = location.getSpeed()+"";
+            liveGps = String.format("LAT: %.5f | LON: %.5f", location.getLatitude(), location.getLongitude());
+            updateTelemetryUI();
 	    //	Toast.makeText(this, latitude+"a"+longitude, Toast.LENGTH_SHORT).show();
 	    
 	    }
@@ -213,7 +287,8 @@ public class Inner extends ActionBarActivity implements LocationListener {
             database.insertData(values1[0]+"", values1[1]+"", values1[2]+"",speed, latitude, longitude,format,loc,file);
             Log.d("here","here");
             }
-            t1.setText("x: "+values1[0]+" y: "+values1[1]+" z: "+values1[2] + "\n");  
+            liveAccel = String.format("ACCEL (m/s2)\nX: %05.2f | Y: %05.2f | Z: %05.2f", values1[0], values1[1], values1[2]);
+            updateTelemetryUI();
             
         }  
     };  
@@ -260,6 +335,8 @@ public class Inner extends ActionBarActivity implements LocationListener {
     	latitude = location.getLatitude()+"";
     	longitude = location.getLongitude()+"";
     	speed = location.getSpeed()+"";
+        liveGps = String.format("LAT: %.5f | LON: %.5f", location.getLatitude(), location.getLongitude());
+        updateTelemetryUI();
     //	Toast.makeText(this, latitude+"a"+longitude, Toast.LENGTH_SHORT).show();
     
     }
@@ -352,8 +429,7 @@ public class Inner extends ActionBarActivity implements LocationListener {
         	Log.d("cam","2.2");
         	 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
       	    String imageFileName = "JPEG_" + timeStamp + "_";
-      	    File storageDir = Environment.getExternalStoragePublicDirectory(
-      	            Environment.DIRECTORY_PICTURES);
+      	    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
       	    File image=null;
 			try {
 				Log.d("cam","2.4");
@@ -413,8 +489,7 @@ public class Inner extends ActionBarActivity implements LocationListener {
  	    // Create an image file name
  	    String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
  	    String imageFileName = "JPEG_" + timeStamp + "_";
- 	    File storageDir = Environment.getExternalStoragePublicDirectory(
- 	            Environment.DIRECTORY_PICTURES);
+ 	    File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
  	    File image = File.createTempFile(
  	        imageFileName,  /* prefix */
  	        ".jpg",         /* suffix */
@@ -431,6 +506,22 @@ public class Inner extends ActionBarActivity implements LocationListener {
    	 
    	 }
      
+    // Phase 2 Implementation: Secure Teardown Pipeline
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            if (nmeaListener != null && locationManager != null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                locationManager.removeNmeaListener(nmeaListener);
+            }
+            if (nmeaFileStream != null) {
+                nmeaFileStream.flush();
+                nmeaFileStream.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
 
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/Maargha_Android_Code.iml" filepath="$PROJECT_DIR$/.idea/Maargha_Android_Code.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Code/Sensor/Sensor.iml" filepath="$PROJECT_DIR$/Code/Sensor/Sensor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Code/VoiceApp/VoiceApp.iml" filepath="$PROJECT_DIR$/Code/VoiceApp/VoiceApp.iml" />
+    </modules>
+  </component>
+</project>

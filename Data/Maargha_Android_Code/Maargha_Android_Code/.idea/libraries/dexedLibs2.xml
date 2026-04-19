@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="dexedLibs2">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/Code/VoiceApp/bin/dexedLibs/android-support-v4-4230442d1ce585816b5aee2ebf8a53a2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Code/VoiceApp/bin/dexedLibs/appcompat_v7-04ce5337d15ac0030ae01d7454729f03.jar!/" />
+      <root url="jar://$PROJECT_DIR$/Code/VoiceApp/bin/dexedLibs/android-support-v7-appcompat-24e508196da0f037ea8e22b7fe454c2a.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sensor.MainActivity" >
+    
+
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:src="@drawable/ic_launcher" />
+
+    <FrameLayout
+        android:id="@+id/preview"
+    	android:layout_alignParentBottom="true"  
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+         >
+    </FrameLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/preview"
+        android:layout_marginBottom="53dp"
+        android:onClick="submit"
+        android:text="click" />
+
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageView1"
+        android:layout_toRightOf="@+id/button1"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/preview"
+        android:layout_alignLeft="@+id/imageView1"
+        android:text="TextView" />
+
+</RelativeLayout>
